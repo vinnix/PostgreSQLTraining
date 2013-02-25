@@ -2,11 +2,25 @@
 -- PostgreSQL database dump
 --
 
+SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
-SET standard_conforming_strings = off;
+SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET escape_string_warning = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
 
 SET search_path = public, pg_catalog;
 
@@ -21,7 +35,8 @@ SET default_with_oids = false;
 CREATE TABLE agente (
     codigo integer,
     cidade integer,
-    nome character varying
+    nome character varying,
+    resp integer
 );
 
 
@@ -111,22 +126,22 @@ ALTER TABLE public.estados OWNER TO postgres;
 -- Data for Name: agente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY agente (codigo, cidade, nome) FROM stdin;
-1	1	Fulano
-2	3	Ciclano
-3	6	Beltrano
-4	9	Juliano
-5	12	Fabiano
-6	2	Juliana
-7	4	Matheus
-8	6	Patricia
-9	8	Renata
-10	10	Vander
-11	11	Alex
-12	5	Rosilei
-13	7	Pires
-14	10	Renato
-15	12	Mara
+COPY agente (codigo, cidade, nome, resp) FROM stdin;
+1	1	Fulano	\N
+2	3	Ciclano	1
+3	6	Beltrano	1
+4	9	Juliano	10
+5	12	Fabiano	7
+6	2	Juliana	7
+7	4	Matheus	\N
+8	6	Patricia	3
+9	8	Renata	10
+10	10	Vander	3
+11	11	Alex	7
+12	5	Rosilei	3
+13	7	Pires	3
+14	10	Renato	\N
+15	12	Mara	10
 \.
 
 
@@ -257,11 +272,12 @@ RJ	Rio de Janeiro
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: matheus.oliveira
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
+REVOKE ALL ON SCHEMA public FROM "matheus.oliveira";
+GRANT ALL ON SCHEMA public TO "matheus.oliveira";
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
